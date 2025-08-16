@@ -69,8 +69,8 @@ def GenerateRandom2DList(max_value, min_value=1, row=5, col=5):
 
 
 # Generate random 2D list of floats by default row=5, col=5 and min_value is 0.0
-def GenerateRandom2DFloatList(max_value, min_value=0.0, n=5, m=5):
-    return [[GenerateRandomFloat(max_value, min_value) for _ in range(m)] for _ in range(n)]
+def GenerateRandom2DFloatList(max_value, min_value=0.0, row=5, col=5):
+    return [[GenerateRandomFloat(max_value, min_value) for _ in range(col)] for _ in range(row)]
 
 
 # Generate random Character from a-z
@@ -83,6 +83,9 @@ def GenerateRandomupperCharacter():
     return chr(random.randint(ord('A'), ord('Z')))
 
 
+# Generate random Character Number from 0-9
+def GenerateRandomDigitCharacter():
+    return str(random.randint(0, 9))
 
 ##########################################################################
 
@@ -102,7 +105,7 @@ def GenerateRandomupperCharacter():
 
 def Integer_test(x,y,z): # Solution name should match the function name in Question.py but with _test suffix
 
-    return x * y + z 
+    return x + y + z
 
 
 ##########################################################################
@@ -118,14 +121,24 @@ basic_testcase = []
 
 # Add basic test cases #
 # Must have at least 2-3 basic test cases that can manually verify
+# List must be in tuple format (x, y) for the function input
 
-basic_testcase.append((4,5,6))
-basic_testcase.append((5,4,9))
-basic_testcase.append((9,0,0))
+# New script->Method 2: manually add atlease 10 basic test cases #
+
+basic_testcase.append((5,5,10))
+basic_testcase.append((5,6,7))
+basic_testcase.append((9,10,11))
+basic_testcase.append((4,8,12))
+basic_testcase.append((5,10,15))
+basic_testcase.append((9,19,29))
+basic_testcase.append((4,45,1))
+basic_testcase.append((5,1,1))
+basic_testcase.append((9,1,1))
+basic_testcase.append((4,1,1))
 
 # Generate random basic test cases #
-for i in range(0, 10): # Feel free to change the range
-    basic_testcase.append((GenerateRandomInt(100),GenerateRandomInt(100),GenerateRandomInt(100))) # Feel free to change the max_value and min_value
+# for i in range(0, 10): # Feel free to change the range
+#     basic_testcase.append((GenerateRandomInt(100))) # Feel free to change the max_value and min_value
 
 ##########################################################################
 
@@ -140,14 +153,24 @@ advance_testcase = []
 
 # Add advance test cases #
 # Must have at least 2-3 advance test cases that can manually verify
+# List must be in tuple format (x, y) for the function input
 
-advance_testcase.append((100,100,100))
-advance_testcase.append((7,1000,9999))
-advance_testcase.append((999,9999,9999))
+# New script->Method 2: manually add atlease 10 advance test cases #
+
+advance_testcase.append((5,5,10))
+advance_testcase.append((5,6,7))
+advance_testcase.append((9,10,11))
+advance_testcase.append((4,8,12))
+advance_testcase.append((5,10,15))
+advance_testcase.append((9,19,29))
+advance_testcase.append((4,45,1))
+advance_testcase.append((5,1,1))
+advance_testcase.append((9,1,1))
+advance_testcase.append((4,1,1))
 
 # Generate random advance test cases #
-for i in range(0, 12): # Feel free to change the range
-    advance_testcase.append((GenerateRandomInt(1000),GenerateRandomInt(1000),GenerateRandomInt(1000))) # Feel free to change the max_value and min_value
+# for i in range(0, 12): # Feel free to change the range
+#     advance_testcase.append((GenerateRandomInt(1000))) # Feel free to change the max_value and min_value
 
 ##########################################################################
 
@@ -167,8 +190,17 @@ sys.path.append(script_dir)
 # m = 3 # <----insert number of advance test case
 
 # New script
-n = len(basic_testcase)   # <---- number of basic test case auto detect
-m = len(advance_testcase) # <---- number of advance test case auto detect
+# n = len(basic_testcase)   # <---- number of basic test case auto detect
+# m = len(advance_testcase) # <---- number of advance test case auto detect
+
+#New script: auto detect the number of basic and advance test cases and divide by 2
+n = len(basic_testcase) // 2
+m = len(advance_testcase) // 2
+
+# New script->Method 2: Generate random index for basic and advance test cases
+
+i_basic = random.sample(range(len(basic_testcase)), n)
+i_advance = random.sample(range(len(advance_testcase)), m)
 
 filename = Question        # <---- insert function name
 filename_test = filename + '_test'
@@ -232,8 +264,8 @@ with open(mock_file_path, 'w') as f:
 prob = importlib.import_module(f'mock_files.{filename}_mock')
 
 # all testcase were build from here
-list_testcase_basic = ["testcase_basic{}".format(i + 1) for i in range(n)]
-list_testcase_advance = ["testcase_advance{}".format(i + 1) for i in range(m)]
+# list_testcase_basic = ["testcase_basic{}".format(i + 1) for i in range(n)]
+# list_testcase_advance = ["testcase_advance{}".format(i + 1) for i in range(m)]
 
 # ฟังก์ชันตรวจสอบการนำเข้าไลบรารี
 def check_imports(filename, libraries):
@@ -276,8 +308,8 @@ class TestMethods(unittest.TestCase):
                 # testcase_output = eval("{}{}".format(filename_test, eval(list_testcase_basic[i])))
 
                 # New script : evaluates the basic test cases from the list
-                output = eval("prob.{}{}".format(filename, basic_testcase[i]))
-                testcase_output = eval("{}{}".format(filename_test, basic_testcase[i]))
+                output = eval("prob.{}{}".format(filename, basic_testcase[i_basic[i]]))
+                testcase_output = eval("{}{}".format(filename_test, basic_testcase[i_basic[i]]))
 
                 with self.subTest():
                     try:
@@ -296,8 +328,8 @@ class TestMethods(unittest.TestCase):
                 # testcase_output = eval("{}{}".format(filename_test, eval(list_testcase_advance[i])))
 
                 # New script : evaluates the advance test cases from the list
-                output = eval("prob.{}{}".format(filename, advance_testcase[i]))
-                testcase_output = eval("{}{}".format(filename_test, advance_testcase[i]))
+                output = eval("prob.{}{}".format(filename, advance_testcase[i_advance[i]]))
+                testcase_output = eval("{}{}".format(filename_test, advance_testcase[i_advance[i]]))
 
                 with self.subTest():
                     try:
