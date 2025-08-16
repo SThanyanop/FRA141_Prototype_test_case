@@ -28,29 +28,29 @@ from unittest.mock import patch
 
 # Get random integer in range [min_value, max_value] by default min_value is 1
 def GenerateRandomInt(max_value, min_value=1):
-    return (random.randint(min_value, max_value),)
+    return random.randint(min_value, max_value)
 
 
 # Get random float in range [min_value, max_value] by default min_value is 0.0
 def GenerateRandomFloat(max_value,min_value=0.0):
-    return (random.uniform(min_value, max_value),)
+    return random.uniform(min_value, max_value)
 
 
 # Generate random list of integers by default length is 5 and min_value is 1
 def GenerateRandomIntList(max_value, min_value=1,length=5):
-    return ([GenerateRandomInt(max_value, min_value) for _ in range(length)],)
+    return [GenerateRandomInt(max_value, min_value) for _ in range(length)]
 
 
 # Generate random list of unique integers by default length is 5 and min_value is 1
 def GenerateRandomUniqueIntList(max_value, min_value=1, length=5):
     if length > (max_value - min_value + 1):
         raise ValueError("Range too small for unique values.")
-    return (random.sample(range(min_value, max_value + 1), length),)
+    return random.sample(range(min_value, max_value + 1), length)
 
 
 # Generate random list of floats by default length is 5 and min_value is 0.0
 def GenerateRandomFloatList(max_value, min_value=0.0,length=5):
-    return ([GenerateRandomFloat(max_value, min_value) for _ in range(length)],)
+    return [GenerateRandomFloat(max_value, min_value) for _ in range(length)]
 
 
 # Generate random list of unique floats by default length is 5 and min_value is 0.0
@@ -60,29 +60,32 @@ def GenerateRandomUniqueFloatList(max_value, min_value=0.0, length=5):
     unique_floats = set()
     while len(unique_floats) < length:
         unique_floats.add(GenerateRandomFloat(max_value, min_value))
-    return (list(unique_floats),)
+    return list(unique_floats)
 
 
 # Generate random 2D list of integers by default row=5, col=5 and min_value is 1
 def GenerateRandom2DList(max_value, min_value=1, row=5, col=5):
-    return ([[GenerateRandomInt(max_value, min_value) for _ in range(col)] for _ in range(row)],)
+    return [[GenerateRandomInt(max_value, min_value) for _ in range(col)] for _ in range(row)]
 
 
 # Generate random 2D list of floats by default row=5, col=5 and min_value is 0.0
-def GenerateRandom2DFloatList(max_value, min_value=0.0, n=5, m=5):
-    return ([[GenerateRandomFloat(max_value, min_value) for _ in range(m)] for _ in range(n)],)
+def GenerateRandom2DFloatList(max_value, min_value=0.0, row=5, col=5):
+    return [[GenerateRandomFloat(max_value, min_value) for _ in range(col)] for _ in range(row)]
 
 
 # Generate random Character from a-z
 def GenerateRandomlowerCharacter():
-    return (chr(random.randint(ord('a'), ord('z'))),)
+    return chr(random.randint(ord('a'), ord('z')))
 
 
 # Generate random Character from A-Z
 def GenerateRandomupperCharacter():
-    return (chr(random.randint(ord('A'), ord('Z'))),)
+    return chr(random.randint(ord('A'), ord('Z')))
 
 
+# Generate random Character Number from 0-9
+def GenerateRandomDigitCharacter():
+    return str(random.randint(0, 9))
 
 ##########################################################################
 
@@ -118,6 +121,7 @@ basic_testcase = []
 
 # Add basic test cases #
 # Must have at least 2-3 basic test cases that can manually verify
+# List must be in tuple format (x, y) for the function input
 
 basic_testcase.append((4,))
 basic_testcase.append((5,))
@@ -125,7 +129,7 @@ basic_testcase.append((9,))
 
 # Generate random basic test cases #
 for i in range(0, 10): # Feel free to change the range
-    basic_testcase.append(GenerateRandomInt(100)) # Feel free to change the max_value and min_value
+    basic_testcase.append((GenerateRandomInt(100))) # Feel free to change the max_value and min_value
 
 ##########################################################################
 
@@ -140,6 +144,7 @@ advance_testcase = []
 
 # Add advance test cases #
 # Must have at least 2-3 advance test cases that can manually verify
+# List must be in tuple format (x, y) for the function input
 
 advance_testcase.append((100,))
 advance_testcase.append((7,))
@@ -147,7 +152,7 @@ advance_testcase.append((999,))
 
 # Generate random advance test cases #
 for i in range(0, 12): # Feel free to change the range
-    advance_testcase.append(GenerateRandomInt(1000)) # Feel free to change the max_value and min_value
+    advance_testcase.append((GenerateRandomInt(1000))) # Feel free to change the max_value and min_value
 
 ##########################################################################
 
