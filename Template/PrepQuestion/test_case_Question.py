@@ -123,13 +123,22 @@ basic_testcase = []
 # Must have at least 2-3 basic test cases that can manually verify
 # List must be in tuple format (x, y) for the function input
 
+# New script->Method 2: manually add atlease 10 basic test cases #
+
 basic_testcase.append((4,))
 basic_testcase.append((5,))
 basic_testcase.append((9,))
+basic_testcase.append((4,))
+basic_testcase.append((5,))
+basic_testcase.append((9,))
+basic_testcase.append((4,))
+basic_testcase.append((5,))
+basic_testcase.append((9,))
+basic_testcase.append((4,))
 
 # Generate random basic test cases #
-for i in range(0, 10): # Feel free to change the range
-    basic_testcase.append((GenerateRandomInt(100))) # Feel free to change the max_value and min_value
+# for i in range(0, 10): # Feel free to change the range
+#     basic_testcase.append((GenerateRandomInt(100))) # Feel free to change the max_value and min_value
 
 ##########################################################################
 
@@ -146,13 +155,22 @@ advance_testcase = []
 # Must have at least 2-3 advance test cases that can manually verify
 # List must be in tuple format (x, y) for the function input
 
+# New script->Method 2: manually add atlease 10 advance test cases #
+
 advance_testcase.append((100,))
 advance_testcase.append((7,))
 advance_testcase.append((999,))
+advance_testcase.append((100,))
+advance_testcase.append((7,))
+advance_testcase.append((999,))
+advance_testcase.append((100,))
+advance_testcase.append((7,))
+advance_testcase.append((999,))
+advance_testcase.append((100,))
 
 # Generate random advance test cases #
-for i in range(0, 12): # Feel free to change the range
-    advance_testcase.append((GenerateRandomInt(1000))) # Feel free to change the max_value and min_value
+# for i in range(0, 12): # Feel free to change the range
+#     advance_testcase.append((GenerateRandomInt(1000))) # Feel free to change the max_value and min_value
 
 ##########################################################################
 
@@ -172,8 +190,17 @@ sys.path.append(script_dir)
 # m = 3 # <----insert number of advance test case
 
 # New script
-n = len(basic_testcase)   # <---- number of basic test case auto detect
-m = len(advance_testcase) # <---- number of advance test case auto detect
+# n = len(basic_testcase)   # <---- number of basic test case auto detect
+# m = len(advance_testcase) # <---- number of advance test case auto detect
+
+#New script: auto detect the number of basic and advance test cases and divide by 2
+n = len(basic_testcase) // 2
+m = len(advance_testcase) // 2
+
+# New script->Method 2: Generate random index for basic and advance test cases
+
+i_basic = random.sample(range(len(basic_testcase)), n)
+i_advance = random.sample(range(len(advance_testcase)), m)
 
 filename = Question        # <---- insert function name
 filename_test = filename + '_test'
@@ -237,8 +264,8 @@ with open(mock_file_path, 'w') as f:
 prob = importlib.import_module(f'mock_files.{filename}_mock')
 
 # all testcase were build from here
-list_testcase_basic = ["testcase_basic{}".format(i + 1) for i in range(n)]
-list_testcase_advance = ["testcase_advance{}".format(i + 1) for i in range(m)]
+# list_testcase_basic = ["testcase_basic{}".format(i + 1) for i in range(n)]
+# list_testcase_advance = ["testcase_advance{}".format(i + 1) for i in range(m)]
 
 # ฟังก์ชันตรวจสอบการนำเข้าไลบรารี
 def check_imports(filename, libraries):
@@ -281,8 +308,8 @@ class TestMethods(unittest.TestCase):
                 # testcase_output = eval("{}{}".format(filename_test, eval(list_testcase_basic[i])))
 
                 # New script : evaluates the basic test cases from the list
-                output = eval("prob.{}{}".format(filename, basic_testcase[i]))
-                testcase_output = eval("{}{}".format(filename_test, basic_testcase[i]))
+                output = eval("prob.{}{}".format(filename, basic_testcase[i_basic[i]]))
+                testcase_output = eval("{}{}".format(filename_test, basic_testcase[i_basic[i]]))
 
                 with self.subTest():
                     try:
@@ -301,8 +328,8 @@ class TestMethods(unittest.TestCase):
                 # testcase_output = eval("{}{}".format(filename_test, eval(list_testcase_advance[i])))
 
                 # New script : evaluates the advance test cases from the list
-                output = eval("prob.{}{}".format(filename, advance_testcase[i]))
-                testcase_output = eval("{}{}".format(filename_test, advance_testcase[i]))
+                output = eval("prob.{}{}".format(filename, advance_testcase[i_advance[i]]))
+                testcase_output = eval("{}{}".format(filename_test, advance_testcase[i_advance[i]]))
 
                 with self.subTest():
                     try:
