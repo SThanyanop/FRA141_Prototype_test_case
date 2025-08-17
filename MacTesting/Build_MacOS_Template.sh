@@ -19,7 +19,7 @@ pyinstaller --onefile --windowed test_case_QUESTION_NAME.py
 
 # Move the generated app to Tester directory
 # TA Replace QUESTION_NAME with actual question name
-if [ -f "./dist/test_case_QUESTION_NAME.app" ]; then
+if [ -d "./dist/test_case_QUESTION_NAME.app" ]; then
     mv ./dist/test_case_QUESTION_NAME.app ./Tester/
     echo "Successfully built and moved test_case_QUESTION_NAME.app to Tester directory"
 else

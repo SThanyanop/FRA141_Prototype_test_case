@@ -19,7 +19,7 @@ pyinstaller --onefile --windowed test_case_ListInteger.py
 
 # Move the generated app to Tester directory
 # TA Replace ListInteger with actual question name
-if [ -f "./dist/test_case_ListInteger.app" ]; then
+if [ -d "./dist/test_case_ListInteger.app" ]; then
     mv ./dist/test_case_ListInteger.app ./Tester/
     echo "Successfully built and moved test_case_ListInteger.app to Tester directory"
 else
